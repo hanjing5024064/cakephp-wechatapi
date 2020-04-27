@@ -1,0 +1,24 @@
+/* Write your styles */
+.am-header-default{
+    background-color: #605ca8;
+}
+.am-navbar-default .am-navbar-nav{
+    background-color: #605ca8;
+}
+
+.am-menu-slide1 .am-menu-nav{
+    /*background-color: #605ca8;*/
+}
+.am-menu-slide1 .am-menu-nav>li>a{
+    /*color: #fff;*/
+}
+.top-button{
+    margin: 10px;
+}
+.ss-button-3-1{
+    width:32%;
+}
+.am-btn-warning{
+    /*background-color: #ffc000;*/
+    /*border-color: #ffc000;*/
+}
