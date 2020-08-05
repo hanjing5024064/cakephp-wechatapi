@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <?= $this->Html->css('bootstrap.min.css');?>
-    <?= $this->Html->css('kit/kit.css');?>
+<!--    <?= $this->Html->css('kit/kit.css');?>-->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!--    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
     <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
