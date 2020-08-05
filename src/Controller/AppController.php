@@ -44,6 +44,10 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        //加载公司名称及平台名称
+        $this->set('pageTitle', Configure::read('plantform.name'));
+        $this->set('company', Configure::read('company'));
+
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
