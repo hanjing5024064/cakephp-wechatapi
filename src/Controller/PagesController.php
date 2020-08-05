@@ -72,4 +72,10 @@ class PagesController extends AppController
 
         return $this->render();
     }
+
+    //少儿编程案列介绍
+    public function kitPublish(){
+        $this->viewBuilder()->setLayout('mobile_bootstrap');
+        $this->set('pageTitle', '少儿编程');
+    }
 }
