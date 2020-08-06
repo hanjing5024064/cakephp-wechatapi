@@ -1,7 +1,7 @@
 # 微信公众号应用开发基础代码
 
 #### 示例公众号【科技创造自由生活】
-![avatar](http://wx.jyfrl.com/img/qrcode_kjczzysh.jpg)
+![avatar](http://wx.jyfrl.com/img/qrcode_kjczzysh_s.jpg)
 
 #### 开发环境及框架：
 * "php": ">=7.2",
