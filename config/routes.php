@@ -45,6 +45,15 @@ use Cake\Routing\RouteBuilder;
 /** @var \Cake\Routing\RouteBuilder $routes */
 $routes->setRouteClass(DashedRoute::class);
 
+//微信
+$routes->scope('/wc', function (RouteBuilder $routes){
+    //微信处理逻辑
+    $routes->connect('/', ['controller' => 'HomepageWC', 'action' => 'index']);
+
+    //授权回调
+    $routes->connect('/oauth_callback', ['controller' => 'HomepageWC', 'action' => 'oauthCallback']);
+});
+
 $routes->scope('/', function (RouteBuilder $builder) {
     // Register scoped middleware for in scopes.
     $builder->registerMiddleware('csrf', new CsrfProtectionMiddleware([
