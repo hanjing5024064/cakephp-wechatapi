@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
@@ -19,7 +20,7 @@ class MyWechatComponent extends Component
     //当前公众号ID
     private $gzhID;
 
-    public function initialize(array $config):void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->controller = $this->_registry->getController();
@@ -28,7 +29,7 @@ class MyWechatComponent extends Component
         $this->gzhID = $this->getConfig('gzhID');
 
         //初始化微信配置参数
-        if($this->initConfig()){
+        if ($this->initConfig()) {
             //设置微信操作对象
             $this->application = Factory::officialAccount($this->wxConfig);
         }
@@ -66,6 +67,7 @@ class MyWechatComponent extends Component
     }
 
     /////////////////////////////////////////////////////
+
     /**
      * 初始化微信配置参数
      * @return bool
@@ -73,40 +75,40 @@ class MyWechatComponent extends Component
     private function initConfig()
     {
 
-       if($this->gzhID){
-           $this->wxConfig = [
-               'debug' => true,
+        if ($this->gzhID) {
+            $this->wxConfig = [
+                'debug' => true,
 //            'app_id' => 'wx5698c52e2fdd9ce0',
 //            'secret' => '99d107454b2482ff70ff183fbfa70e67',
 //            'token'  => 'cisleIKf34kjvlL',
-               // 'aes_key' => null, // 可选
+                // 'aes_key' => null, // 可选
 //        'log' => [
 //            'level' => 'debug',
 //            'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
 //        ],
-               'oauth' => [
-                   'scopes' => ['snsapi_base'],
-                   'callback' => $this->wxUrl . '/wc/oauth_callback?gzhID=' . $this->WechatGzhId,
-               ],
-               'payment' => [
-                   'merchant_id' => '1417865802',
-                   'key' => 'df34gi9045gj90g45U094pw3423paJKe',
-                   'cert_path' => '../config/apiclient_cert.pem', // XXX: 绝对路径！！！！
-                   'key_path' => '../config/apiclient_key.pem',      // XXX: 绝对路径！！！！
-                   'notify_url' => 'http://gzh-hwwl.shhwxx.com.cn/Car/index?hwId=5',       // 你也可以在下单时单独设置来想覆盖它
-               ],
-           ];
+                'oauth' => [
+                    'scopes' => ['snsapi_base'],
+                    'callback' => $this->wxUrl . '/wc/oauth_callback?gzhID=' . $this->WechatGzhId,
+                ],
+                'payment' => [
+                    'merchant_id' => '1417865802',
+                    'key' => 'df34gi9045gj90g45U094pw3423paJKe',
+                    'cert_path' => '../config/apiclient_cert.pem', // XXX: 绝对路径！！！！
+                    'key_path' => '../config/apiclient_key.pem',      // XXX: 绝对路径！！！！
+                    'notify_url' => 'http://gzh-hwwl.shhwxx.com.cn/Car/index?hwId=5',       // 你也可以在下单时单独设置来想覆盖它
+                ],
+            ];
 
-           $this->controller->loadModel('WechatGzhs');
-           $wechatGzh = $this->controller->WechatGzhs->get($this->gzhID);
-           if($wechatGzh){
-               $this->wxConfig['app_id'] = $wechatGzh->appid;
-               $this->wxConfig['secret'] = $wechatGzh->secret;
-               $this->wxConfig['token'] = $wechatGzh->token;
-               $this->subscribeMsg = $wechatGzh->subscribemsg;
-               return true;
-           }
-       }
+            $this->controller->loadModel('WechatGzhs');
+            $wechatGzh = $this->controller->WechatGzhs->get($this->gzhID);
+            if ($wechatGzh) {
+                $this->wxConfig['app_id'] = $wechatGzh->appid;
+                $this->wxConfig['secret'] = $wechatGzh->secret;
+                $this->wxConfig['token'] = $wechatGzh->token;
+                $this->subscribeMsg = $wechatGzh->subscribemsg;
+                return true;
+            }
+        }
 
         return false;
     }
@@ -134,7 +136,8 @@ class MyWechatComponent extends Component
      * @param string $nowUser
      * @return string
      */
-    private function getNickname($nowUser = ''){
+    private function getNickname($nowUser = '')
+    {
         $nickname = '未设置';
         if ($nowUser) {
             $nickname = $nowUser->nickname;
@@ -145,7 +148,8 @@ class MyWechatComponent extends Component
     /**
      * 获取公众号ID
      */
-    private function getWechatGzhID(){
+    private function getWechatGzhID()
+    {
         return $this->gzhID;
     }
 }
