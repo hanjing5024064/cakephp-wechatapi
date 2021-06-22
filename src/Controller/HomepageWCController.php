@@ -10,21 +10,12 @@ namespace App\Controller;
  */
 class HomepageWCController extends AppController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->loadComponent('MyWechat', [
-            'gzhID' => $this->request->getQuery('gzhID')
-        ]);
-    }
-
     /**
      * 微信服务处理
      */
     public function index(){
-        $this->viewBuilder()->setLayout(null);
-        var_dump($this->MyWechat->index());;
-        exit();
+        $this->viewBuilder()->disableAutoLayout();
+        $this->MyWechat->index();
     }
 
     /**
@@ -34,5 +25,12 @@ class HomepageWCController extends AppController
         $targetUrl = $this->MyWechat->oauthCallback();
         header('location:'. $targetUrl); // 跳转到 user/profile
         exit();
+    }
+
+    /**
+     * 设置微信菜单
+     */
+    public function setMenu(){
+        $this->MyWechat->setMenu();
     }
 }

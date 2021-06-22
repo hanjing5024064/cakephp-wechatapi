@@ -258,3 +258,9 @@ if (isset($js)) echo $this->element('wx_jssdk', ['title' => '少儿编程最新�
         app.init();
     });
 </script>
+<?= $this->element('wx_share', [
+    'shareTitle' => '案例-培训',
+    'shareDesc' => '获客宣传途径',
+    'shareLink' => 'http://wx.jyfrl.com/Pages/kitPublish?gzhID=' . $gzhID,
+    'shareImg' => 'http://wx.jyfrl.com/img/logo-mini-fl.png'
+]) ?>

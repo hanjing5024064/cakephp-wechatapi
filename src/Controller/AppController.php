@@ -44,10 +44,28 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('MyUtil');
 
         //加载公司名称及平台名称
         $this->set('pageTitle', Configure::read('plantform.name'));
         $this->set('company', Configure::read('company'));
+
+        //是否移动端访问
+        if($this->MyUtil->isMobile()){
+//            echo 'mobile';
+            //是否微信 且配置了公众号ID
+            if($this->MyUtil->isWechat() && $this->request->getQuery('gzhID')){
+                $gzhID = $this->request->getQuery('gzhID');
+//                echo 'wechat';
+                $this->loadComponent('MyWechat', [
+                    'gzhID' => $gzhID
+                ]);
+                $jssdkConfig = $this->MyWechat->getJsSDKConfig();
+//                echo $jssdkConfig;
+                $this->set('jssdkConfig', $jssdkConfig);
+                $this->set('gzhID', $gzhID);
+            }
+        }
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.
