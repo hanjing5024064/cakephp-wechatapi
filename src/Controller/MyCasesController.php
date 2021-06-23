@@ -20,13 +20,18 @@ class MyCasesController extends AppController
         $this->viewBuilder()->setLayout('mobile_bootstrap');
     }
 
+    //少儿编程案列介绍
+    public function kitPublish(){
+        $this->set('pageTitle', '教育行业');
+    }
+
     public function dsf()
     {
-
+        $this->set('pageTitle', '灯饰行业');
     }
 
     public function hmt()
     {
-
+        $this->set('pageTitle', '装修行业');
     }
 }

@@ -259,8 +259,8 @@ if (isset($js)) echo $this->element('wx_jssdk', ['title' => '少儿编程最新�
     });
 </script>
 <?= $this->element('wx_share', [
-    'shareTitle' => '案例-培训',
-    'shareDesc' => '获客宣传途径',
-    'shareLink' => 'http://wx.jyfrl.com/Pages/kitPublish?gzhID=' . $gzhID,
-    'shareImg' => 'http://wx.jyfrl.com/img/logo-mini-fl.png'
+    'shareTitle' => '案例:培训行业-福瑞来',
+    'shareDesc' => '凯特教育是少儿编程培训的先驱，资深研发工程师来为孩子们深入浅出的讲解IT知识。',
+    'shareLink' => 'http://wx.jyfrl.com/MyCases/kitPublish?gzhID=' . $gzhID,
+    'shareImg' => 'http://wx.jyfrl.com/img/kit_logo.png'
 ]) ?>

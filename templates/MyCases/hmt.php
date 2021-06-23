@@ -8,7 +8,9 @@
         <img class="img-thumbnail" src="<?php echo $this->Url->build('/img/cases/hmt_qrcode.png');?>" alt="Card image cap">
     </div>
 </div>
-<?php
-if (isset($js)) echo $this->element('wx_jssdk', ['title' => '案例:装修行业-福瑞来', 'description' => '借助网络技术、专业装饰经验、现代化工器具和检测仪，走进社区服务，力争房屋维修产业化、规模化、网络化。', 'link' => 'Pages/kitPublish?hwId=4', 'imgUrl' => 'img/logo.png']);
-//var_dump($js);
-?>
+<?= $this->element('wx_share', [
+    'shareTitle' => '案例:装修行业-福瑞来',
+    'shareDesc' => '护满堂从事建筑行业十几年，建造师、五大员阵容齐全，核心管理层初期在编30人。',
+    'shareLink' => 'http://wx.jyfrl.com/MyCases/hmt?gzhID=' . $gzhID,
+    'shareImg' => 'http://wx.jyfrl.com/img/hmt.png'
+]) ?>

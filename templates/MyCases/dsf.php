@@ -12,3 +12,9 @@
 if (isset($js)) echo $this->element('wx_jssdk', ['title' => '案例:灯饰行业-福瑞来', 'description' => '深圳市灯师傅互联网技术有限公司是一家以“共享经济模式”为发展理念的创新型互联网公司， 灯师傅平台致力于为全国灯饰用户提供上门安装、清洗、保养、维修及翻新等服务.', 'link' => 'Pages/kitPublish?hwId=4', 'imgUrl' => 'img/logo.png']);
 //var_dump($js);
 ?>
+<?= $this->element('wx_share', [
+    'shareTitle' => '案例:灯饰行业-福瑞来',
+    'shareDesc' => '获客宣传途径',
+    'shareLink' => 'http://wx.jyfrl.com/MyCases/dsf?gzhID=' . $gzhID,
+    'shareImg' => 'http://wx.jyfrl.com/img/cases/dsf.png'
+]) ?>
