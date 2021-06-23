@@ -5,6 +5,11 @@ namespace App\Controller\Component;
 use Cake\Controller\Component;
 use EasyWeChat\Factory;
 
+/**
+ * 微信交互组件
+ * Class MyWechatComponent
+ * @package App\Controller\Component
+ */
 class MyWechatComponent extends Component
 {
     private $controller;
@@ -23,10 +28,7 @@ class MyWechatComponent extends Component
     public function initialize(array $config): void
     {
         parent::initialize($config);
-        $this->controller = $this->_registry->getController();
-
-        //设置公众号ID
-        $this->gzhID = $this->getConfig('gzhID');
+        $this->controller = $this->getController();
 
         //初始化微信配置参数
         if ($this->initConfig()) {
@@ -39,29 +41,38 @@ class MyWechatComponent extends Component
     public function index()
     {
         $server = $this->application->server;
-//        $server->setMessageHandler(function ($message) {
-//            $nowUserOpenid = $message->FromUserName;
-//            $userSer = $this->application->user;
-//            $this->nowUser = $userSer->get($nowUserOpenid);
-//
-//            // 注意，这里的 $message 不仅仅是用户发来的消息，也可能是事件
-//            // 当 $message->MsgType 为 event 时为事件
-//            if ($message->MsgType == 'event') {
-//                switch ($message->Event) {
-//                    case 'subscribe'://用户关注
-//                        return $this->getSubscribeMsg($this->getNickname($this->nowUser));
-//                        break;
-//                    case 'unsubscribe'://用户取消关注
-//                        return $this->unsubscribeMsg($message->FromUserName);
-//                        break;
-//                    case 'CLICK'://点击事件
-//                        return 'key: ' . $message->EventKey;
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
+        $user = $this->application->user;
+        $server->push(function ($message) {
+            switch ($message['MsgType']) {
+                case 'event':
+                    return '收到事件消息';
+                    break;
+                case 'text':
+                    return $this->dealTextMsg($message);
+                    break;
+                case 'image':
+                    return '收到图片消息';
+                    break;
+                case 'voice':
+                    return '收到语音消息';
+                    break;
+                case 'video':
+                    return '收到视频消息';
+                    break;
+                case 'location':
+                    return '收到坐标消息';
+                    break;
+                case 'link':
+                    return '收到链接消息';
+                    break;
+                case 'file':
+                    return '收到文件消息';
+                // ... 其它消息
+                default:
+                    return '收到其它消息';
+                    break;
+            }
+        });
         $response = $server->serve();
         $response->send();
     }
@@ -74,18 +85,11 @@ class MyWechatComponent extends Component
      */
     private function initConfig()
     {
+        $this->gzhID = $this->getConfig('gzhID');
 
         if ($this->gzhID) {
             $this->wxConfig = [
                 'debug' => true,
-//            'app_id' => 'wx5698c52e2fdd9ce0',
-//            'secret' => '99d107454b2482ff70ff183fbfa70e67',
-//            'token'  => 'cisleIKf34kjvlL',
-                // 'aes_key' => null, // 可选
-//        'log' => [
-//            'level' => 'debug',
-//            'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
-//        ],
                 'oauth' => [
                     'scopes' => ['snsapi_base'],
                     'callback' => $this->wxUrl . '/wc/oauth_callback?gzhID=' . $this->WechatGzhId,
@@ -111,6 +115,22 @@ class MyWechatComponent extends Component
         }
 
         return false;
+    }
+
+    /**
+     * 处理用户发来的文本信息
+     * @param $message
+     * @return News|string
+     */
+    public function dealTextMsg($message){
+        switch ($message['Content']) {
+            case 'info':
+                return $message['FromUserName'];
+                break;
+            default:
+                return 'I  cant understand you.';
+                break;
+        }
     }
 
     /**
@@ -151,5 +171,43 @@ class MyWechatComponent extends Component
     private function getWechatGzhID()
     {
         return $this->gzhID;
+    }
+
+    /**
+     * 获取jssdkconfig数组
+     * @return mixed
+     */
+    public function getJsSDKConfig()
+    {
+        $APIs = [
+            'onMenuShareAppMessage', //发送给朋友
+            'onMenuShareTimeline',   //分享到朋友圈
+            'onMenuShareQQ',         //发送给qq好友
+            'onMenuShareWeibo',      //分享到微博
+            'onMenuShareQZone'       //分享到qq空间
+        ];
+        $jssdkConfig = $this->application->jssdk->buildConfig($APIs, false);
+
+        return $jssdkConfig;
+    }
+
+    //设置菜单
+    public function setMenu()
+    {
+        $app = $this->application;
+        $menu = $app->menu;
+
+        $result = $menu->create($this->getButtonsV2());
+        var_dump($result);
+        echo($this->gzhID);
+        exit();
+    }
+    //获得自定义菜单数据
+    public function getButtonsV2()
+    {
+        $this->controller->loadModel('WechatGzhs');
+        $wechatGzh = $this->controller->WechatGzhs->get($this->gzhID);
+        $this->wxButtons = json_decode($wechatGzh->menu, true);
+        return $this->wxButtons;
     }
 }
